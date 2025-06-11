@@ -1,0 +1,15 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: spring-sandbox
+
+    datasource:
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+        password: 1234
+
+    jpa:
+        hibernate:
+            ddl-auto: update
