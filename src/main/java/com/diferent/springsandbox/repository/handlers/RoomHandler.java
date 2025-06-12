@@ -4,6 +4,7 @@ import com.diferent.springsandbox.domain.errors.ServiceException;
 import com.diferent.springsandbox.model.dto.RoomDto;
 import com.diferent.springsandbox.model.entity.RoomEntity;
 import com.diferent.springsandbox.repository.RoomRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,21 @@ import org.springframework.stereotype.Service;
 public class RoomHandler {
 
 	private RoomRepository roomRepository;
+
+	public List<RoomDto> obtainRooms() {
+		try {
+
+			List<RoomEntity> rooms = roomRepository.findAll();
+
+			return toListRoomDto(rooms);
+
+		} catch (Exception e) {
+			throw new ServiceException.Builder("ERR-010")
+				.withMessage("Something went wrong")
+				.withHttpStatus(HttpStatus.SERVICE_UNAVAILABLE)
+				.build();
+		}
+	}
 
 	public void save(RoomDto roomDto) {
 
@@ -63,5 +79,16 @@ public class RoomHandler {
 				.withHttpStatus(HttpStatus.BAD_REQUEST)
 				.build();
 		}
+	}
+
+	private List<RoomDto> toListRoomDto(List<RoomEntity> entities) {
+		return entities.stream().map(roomEntity -> RoomDto.builder()
+			.id(roomEntity.getId())
+			.door(roomEntity.getDoor())
+			.level(roomEntity.getLevel())
+			.capacity(roomEntity.getCapacity())
+			.startDate(roomEntity.getStartDate())
+			.endDate(roomEntity.getEndDate())
+			.build()).toList();
 	}
 }

@@ -1,5 +1,6 @@
 package com.diferent.springsandbox.domain.token;
 
+import com.diferent.springsandbox.domain.errors.ServiceException;
 import com.diferent.springsandbox.model.enums.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -66,12 +68,20 @@ public class JwtService {
 
 	private Claims extractAllClaims(String bearerToken) {
 		final String token = bearerToken.substring(7);
-		return Jwts
-			.parserBuilder()
-			.setSigningKey(getSignInKey())
-			.build()
-			.parseClaimsJws(token)
-			.getBody();
+
+		try {
+			return Jwts
+				.parserBuilder()
+				.setSigningKey(getSignInKey())
+				.build()
+				.parseClaimsJws(token)
+				.getBody();
+		} catch (Exception e) {
+			throw new ServiceException.Builder("AUTH")
+				.withHttpStatus(HttpStatus.UNAUTHORIZED)
+				.withMessage("Expired token")
+				.build();
+		}
 	}
 
 	private Key getSignInKey() {
