@@ -11,9 +11,9 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class JwtService {
 
 	public static final String USERNAME = "username";
@@ -64,7 +64,8 @@ public class JwtService {
 			.compact();
 	}
 
-	private Claims extractAllClaims(String token) {
+	private Claims extractAllClaims(String bearerToken) {
+		final String token = bearerToken.substring(7);
 		return Jwts
 			.parserBuilder()
 			.setSigningKey(getSignInKey())

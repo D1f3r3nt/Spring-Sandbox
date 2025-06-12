@@ -16,7 +16,7 @@ public enum UserRole {
 	}
 
 	static public UserRole toUserRole(String value) {
-		if (value.equals("admin")) {
+		if (value.equalsIgnoreCase("admin")) {
 			return ADMIN;
 		} else {
 			return USER;
