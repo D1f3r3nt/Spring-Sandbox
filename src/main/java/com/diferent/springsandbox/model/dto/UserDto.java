@@ -1,5 +1,6 @@
 package com.diferent.springsandbox.model.dto;
 
+import com.diferent.springsandbox.model.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class UserDto {
     private String email;
 
     private String password;
+
+    private UserRole role;
 }
 
 

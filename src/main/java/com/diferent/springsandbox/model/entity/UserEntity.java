@@ -1,5 +1,6 @@
 package com.diferent.springsandbox.model.entity;
 
+import com.diferent.springsandbox.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,4 +21,6 @@ public class UserEntity {
     private String email;
 
     private String password;
+
+    private String role;
 }
