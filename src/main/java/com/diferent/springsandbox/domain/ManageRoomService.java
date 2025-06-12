@@ -38,4 +38,9 @@ public class ManageRoomService {
 
 		roomHandler.update(roomDto);
 	}
+
+	public void removeRoom(Long id) {
+
+		roomHandler.delete(id);
+	}
 }

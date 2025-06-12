@@ -52,4 +52,16 @@ public class RoomHandler {
 				.build();
 		}
 	}
+
+	public void delete(Long id) {
+
+		try {
+			roomRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new ServiceException.Builder("ERR-010")
+				.withMessage("Id not found")
+				.withHttpStatus(HttpStatus.BAD_REQUEST)
+				.build();
+		}
+	}
 }

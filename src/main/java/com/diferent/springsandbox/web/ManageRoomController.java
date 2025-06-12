@@ -6,6 +6,8 @@ import com.diferent.springsandbox.model.api.request.CreateRoomRequest;
 import com.diferent.springsandbox.model.api.request.UpdateRoomRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +44,18 @@ public class ManageRoomController {
 		firewall.justAdminUsers(token);
 
 		manageRoomService.updateRoom(request);
+
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> removeRoom(
+		@PathVariable("id") Long roomId,
+		@RequestHeader("Authorization") String token
+	) {
+		firewall.justAdminUsers(token);
+
+		manageRoomService.removeRoom(roomId);
 
 		return ResponseEntity.ok().build();
 	}
