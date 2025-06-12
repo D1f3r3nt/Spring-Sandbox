@@ -1,6 +1,7 @@
 package com.diferent.springsandbox.domain;
 
 import com.diferent.springsandbox.model.api.request.CreateRoomRequest;
+import com.diferent.springsandbox.model.api.request.UpdateRoomRequest;
 import com.diferent.springsandbox.model.dto.RoomDto;
 import com.diferent.springsandbox.repository.handlers.RoomHandler;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,18 @@ public class ManageRoomService {
 			.build();
 
 		roomHandler.save(roomDto);
+	}
+
+	public void updateRoom(UpdateRoomRequest request) {
+		RoomDto roomDto = RoomDto.builder()
+			.id(request.getId())
+			.level(request.getLevel())
+			.door(request.getDoor())
+			.capacity(request.getCapacity())
+			.startDate(request.getStartDate())
+			.endDate(request.getEndDate())
+			.build();
+
+		roomHandler.update(roomDto);
 	}
 }

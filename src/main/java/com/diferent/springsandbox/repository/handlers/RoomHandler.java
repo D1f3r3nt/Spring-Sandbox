@@ -33,4 +33,23 @@ public class RoomHandler {
 				.build();
 		}
 	}
+
+	public void update(RoomDto roomDto) {
+
+		try {
+			roomRepository.update(
+				roomDto.getId(),
+				roomDto.getLevel(),
+				roomDto.getDoor(),
+				roomDto.getCapacity(),
+				roomDto.getStartDate(),
+				roomDto.getEndDate()
+			);
+		} catch (Exception e) {
+			throw new ServiceException.Builder("ERR-010")
+				.withMessage("Duplicated ID")
+				.withHttpStatus(HttpStatus.BAD_REQUEST)
+				.build();
+		}
+	}
 }
