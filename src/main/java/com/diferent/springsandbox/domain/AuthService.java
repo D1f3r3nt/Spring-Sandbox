@@ -1,5 +1,6 @@
 package com.diferent.springsandbox.domain;
 
+import com.diferent.springsandbox.model.api.request.LogInRequest;
 import com.diferent.springsandbox.model.api.request.SignUpRequest;
 import com.diferent.springsandbox.model.dto.UserDto;
 import com.diferent.springsandbox.repository.handlers.UserHandler;
@@ -20,6 +21,17 @@ public class AuthService {
                 .build();
 
         userHandler.save(userDto);
+    }
+
+    public Long login(LogInRequest request) {
+        UserDto userDto = UserDto.builder()
+            .username(request.getUsername())
+            .password(request.getPassword())
+            .build();
+
+        Long id = userHandler.getUserByCredentials(userDto);
+
+        return id;
     }
 
 }
